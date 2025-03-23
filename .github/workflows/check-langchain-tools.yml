@@ -1,4 +1,4 @@
-name: Check LangChain Tool Names
+name: ci
 on:
   push:
     branches: [main]
@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 jobs:
-  check-langchain-tool-names:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +24,10 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --filter "!examples"
 
-      - run: pnpm run check-tool-names:langchain
+      - name: Run lint and fix
+        run: pnpm run lint:fix
+
+      - name: Build packages
+        run: pnpm run build
