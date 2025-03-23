@@ -4,6 +4,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -23,7 +24,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --no-frozen-lockfile --filter "!examples"
 
       - name: Run lint and fix
         run: pnpm run lint:fix
